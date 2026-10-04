@@ -1,0 +1,36 @@
+[
+  {
+    "id": "support_hours",
+    "category": "technical support",
+    "question": "What are your technical support hours?",
+    "variants": [
+      "Is technical support available on weekends?",
+      "Can I get technical help in the middle of the night?"
+    ],
+    "must_include": ["24/7"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "out_of_scope_general",
+    "category": "out of scope",
+    "question": "What's the weather like today?",
+    "variants": [
+      "Who won the football match last night?",
+      "Can you recommend a good restaurant?"
+    ],
+    "must_include": [],
+    "expected_action": "refuse"
+  },
+  {
+    "id": "out_of_scope_tricky",
+    "category": "out of scope",
+    "question": "How much is the LumaBox X999?",
+    "variants": [
+      "Does LumaBox ship to the moon?",
+      "Is LumaBox a good company to invest in?"
+    ],
+    "must_include": [],
+    "expected_action": "refuse",
+    "known_issue": "These share words with the policies and score above the refusal threshold, so only the model's own 'I do not know' stops them (POLICY.md P6)."
+  }
+]

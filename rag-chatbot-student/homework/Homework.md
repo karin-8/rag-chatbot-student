@@ -1,116 +1,113 @@
-# Homework 1 — Hardening Your RAG Chatbot
+# Homework 1 — Run It Like a Product
 
-You already have a working CLI backed by a real local database. This
-homework doesn't add new features so much as it exposes ways a small RAG
-system fails in practice, and asks you to fix them - the same way you'd
-harden any system after the first version works.
+In class you built a bot with a knowledge base, a versioned prompt, a
+policy, a golden dataset, a quality gate and tracing. This homework uses
+all of them the way a team does after launch: add a second knowledge
+source without breaking anything, then improve the bot from what real
+users asked.
 
-**Commit after each exercise.** Your git history should show three (or
-four, with the challenge) separate points of progress, not one giant commit
-at the end - that history is part of what gets submitted.
+**Commit after each exercise.** Your git history should show separate
+points of progress, not one giant commit at the end - that history is part
+of what gets submitted. (Haven't run `git init` yet? See the guide's
+Appendix B.)
 
 Submit by zipping this whole project folder, **including the `.git`
-folder**, and uploading it to [LMS link].
+folder**, and uploading it to [LMS link] by [due date].
 
 ---
 
-## Exercise 1 — Edge case handling (required)
+## Exercise 1 — A second knowledge source: prices (required)
 
-Your prompt already tells the model: *"If the information is unavailable,
-say 'I do not know'."* That's an instruction, not a guarantee -
-`flan-t5-base` is small enough that it won't always obey it, and may
-confidently invent an answer to a question your documents don't cover.
+`homework/model_prices.xlsx` holds LumaBox's product prices (`model`,
+`price`). Customers ask about prices constantly; today the bot refuses
+or says "I do not know".
 
-**Task:** make the refusal deterministic instead of hoping the model
-follows the instruction.
+**Task:** answer price questions from the table, without breaking any
+policy answer and without ever inventing a price.
 
 **How to approach it:**
-1. In a scratch script or the Python REPL, call `retrieve()` with a
-   question your documents clearly answer (e.g. "How long does delivery
-   take?") and one they clearly don't (e.g. "Does LumaBox ship to the
-   moon?"). Print the similarity scores for both.
-2. Look at the gap between the two. Pick a threshold that sits between
-   them.
-3. In `rag_answer` (or wherever makes sense), check the top hit's
-   similarity *before* calling the generator. Below the threshold, skip
-   generation entirely and return a fixed phrase, e.g. `"I don't have
-   information about that."`
+1. **Knowledge.** In `src/ingest.py`, read the sheet with
+   `pandas.read_excel` and turn each row into a sentence, e.g.
+   `f"The {model} costs {price} THB."` - embeddings work on sentences, not
+   table cells. The `model` column is messy on purpose (serial code and
+   name run together, e.g. `"LMX-201 LumaBox X100"`); keep it as is. Add
+   the sentences to the **same** collection as the policy chunks, with a
+   `metadatas` field like `{"source": "price"}`.
+2. **Policy.** Update `POLICY.md`: what may the bot say about prices, and
+   what must it do for a product that isn't in the table? Name how each
+   rule is enforced and tested.
+3. **Golden dataset.** Add at least three `"price"` rows (including one
+   product that isn't a LumaBox), each with variants. Then look at the
+   existing `out_of_scope_tricky` row: "How much is the LumaBox X999?" now
+   retrieves a *real* price row. Run it and see what the bot says.
+4. **Gate.** Run `pytest` and `python -m src.gate`. With more chunks
+   competing, check every existing category still scores at least its
+   baseline. Only then run `python -m src.gate --update-baseline`, and say
+   in the commit message why the new baseline is acceptable.
 
-**Deliverable:** in your README (or a short `homework/exercise1_notes.md`),
-show at least 2 in-scope and 2 out-of-scope example questions and the
-bot's response to each, after your fix.
+**Deliverable** (in `homework/exercise1_notes.md`): the gate output before
+and after, your policy changes, and what the bot now says for the X999
+question - honestly, even if it's wrong. If it's wrong, keep the row with a
+`known_issue` explaining why rather than deleting it.
 
-**What "done" looks like:** the refusal happens every time for an
-out-of-scope question, not just most of the time.
-
----
-
-## Exercise 2 — Multi-source RAG (required)
-
-Real RAG systems are rarely single-sourced. `homework/model_prices.xlsx`
-contains a small table of LumaBox model prices (`model`, `price_thb`).
-
-**Task:** extend the system so it can answer questions from *either*
-source - policies and prices - without mixing them up or guessing.
-
-**How to approach it:**
-1. Read `model_prices.xlsx` with `pandas.read_excel`. Note the `model`
-   column is messy on purpose - it's the serial code and the product name
-   run together (e.g. `"LMX-201 LumaBox X100"`), the way a real inventory
-   export often is. You don't need to split it apart for this exercise.
-2. Turn each row into a short sentence before embedding it, e.g.
-   `f"The {model} costs {price} THB."` - embeddings work on sentences
-   describing a fact, not on bare table cells.
-3. Add these sentences into the **same** Chroma collection as your policy
-   chunks (not a second collection), tagging each item with a metadata
-   field like `source: "policy"` or `source: "price"` so you can tell them
-   apart later if needed.
-4. Re-run ingestion and confirm retrieval now returns relevant results for
-   both kinds of question.
-
-**Ensure they don't hallucinate:** reuse your Exercise 1 fix, so a question
-neither source covers (e.g. the weather) is still refused.
-
-Then test its limit: ask the price of a product that *isn't* in the table
-(e.g. "How much is the LumaBox X999?"). Print the top similarity. A
-neighbouring product's price row can score well above your threshold,
-because to the embedding model "X999" means almost the same as "X200" - so
-the threshold alone may let a wrong price through. You don't have to solve
-this fully here (the challenge exercise is about exactly this), but your
-notes must report what your bot does for this question, honestly.
-
-**Deliverable:** in your notes, show at least one price question, one
-policy question, one question neither source covers, and the unknown-product
-price question above, with the bot's response to each.
+**Won't count:** two collections with your own "does this look like a price
+question?" routing; deleting or rewording golden rows until they pass.
 
 ---
 
-## Challenge exercise — When embeddings can't tell models apart (optional)
+## Exercise 2 — The production loop (required)
 
-Ask your bot "how much is the LumaBox X250?" a few times. You may notice it
-sometimes answers with the X200 or X300 price instead. This isn't a bug in
-your code - it's a limitation of embeddings themselves: `all-MiniLM-L6-v2`
-represents *meaning*, and "LumaBox X200", "LumaBox X250", and "LumaBox X300"
-mean nearly the same thing to it, even though they're different products
-with different prices. Try "how much does model LMX-201 cost?" too (LMX-201
-is the X100's serial code) - the serial codes are sequential and unrelated
-to which model is which, so they carry even less semantic meaning than a
-model name. This version of the problem is usually worse, not better.
+`homework/traffic.txt` is a day of (simulated) real customer messages:
+paraphrases, typos, questions your documents don't cover, frustrated users.
 
-**Task:** plan first, then implement.
+**Task:** find out how the bot really performs, and fix what matters most.
 
-1. **Plan (write 3-5 sentences):** why does this happen, and what kind of
-   fix would actually solve it (not just "use a better embedding model" -
-   assume you're stuck with this one)?
-2. **Implement:** there is a completely different retrieval method from
-   vector search that's good at exactly this: keyword/lexical search, which
-   matches on exact tokens rather than meaning. Add a lexical check for
-   product-model-like tokens in the query (a simple exact/substring match
-   against the known model names is enough; `pip install rank_bm25` if you
-   want to build something closer to real hybrid search). When a query
-   contains an exact model name, prioritize the price entry for *that*
-   model rather than relying on embedding similarity alone.
+1. **Collect.** Replay the traffic and review the traces:
+   ```
+   python -m src.main --replay homework/traffic.txt
+   python -m src.review --sample 5
+   ```
+2. **Analyze.** In `homework/monitoring_report.md`, make a table of every
+   flagged turn and every sampled turn: trace id, question, the bot's
+   answer, and a **failure type**:
+   - *retrieval miss* - the right chunk wasn't retrieved;
+   - *generation error* - the right chunk was retrieved, the answer is wrong
+     or missing;
+   - *knowledge gap* - no document has the answer;
+   - *wrongly refused* / *should have refused* - the policy decision was
+     wrong;
+   - *not a failure* - the bot did the right thing.
 
-**Deliverable:** your written plan, the code, and a demonstration that
-asking about each of the five LumaBox models now reliably returns *that
-model's* price.
+   Then summarize: how many of each type, and which one hurts customers
+   most.
+3. **Fix.** Fix at least **two failures of different types**. For every
+   fix: first add the failing question to `tests/golden.json`, watch it
+   fail, then fix, then run `pytest` and the gate. A knowledge gap is fixed
+   by the content owner, not by the model, so for one of those, write the
+   missing policy text into `data/policies.txt` as if you were LumaBox's
+   support team, and re-run `python -m src.ingest`.
+4. **Sentiment.** Look at the turns flagged with negative sentiment. What
+   should the bot do for a frustrated customer? Add it to `POLICY.md` as a
+   new rule, with how you would enforce and test it. (You don't have to
+   implement it.)
+
+**Deliverable:** `homework/monitoring_report.md` (the table, the summary,
+what you fixed and the gate result after each fix), plus the updated
+`POLICY.md`, `tests/golden.json` and baseline, each fix in its own commit.
+
+---
+
+## Challenge — Exact model names, and CI for real (optional)
+
+1. **Hybrid search.** Ask the price of each LumaBox model and serial code
+   (e.g. "How much does model LMX-201 cost?"). Some come back with a
+   *sibling* product's price: to an embedding model, "X200" and "X250" mean
+   nearly the same thing, and serial codes mean nothing at all. Add golden
+   rows for all of them first, marking failures with `known_issue`. Write a
+   3-5 sentence plan for why this happens, then add a lexical (exact or
+   keyword) match alongside vector search (`pip install rank_bm25` if you
+   want real BM25). When a fix works, pytest fails those rows as
+   unexpectedly passing until you remove `known_issue`.
+2. **CI.** Push your project to a GitHub repository and open the
+   **Actions** tab. Make the `test` job pass (hint: CI has no baseline
+   unless you committed one). Screenshot the green run.

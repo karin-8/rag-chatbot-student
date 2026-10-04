@@ -1,10 +1,15 @@
 """Minimal Streamlit chat UI wrapping the same RAG backend as src/main.py.
 
+This is what the production container in the Dockerfile runs (Module 4).
+You shouldn't need to change this file - it calls the same rag_answer()
+you built, and traces every turn like the CLI does.
+
 Run:
     streamlit run app.py
 """
 import streamlit as st
 
+from src.monitoring import log_turn
 from src.rag import rag_answer
 
 st.title("LumaBox Support Bot")
@@ -23,6 +28,7 @@ if question:
         st.write(question)
 
     result = rag_answer(question)
+    log_turn(result, channel="web")
     answer = result["answer"]
     sources = ", ".join(h["id"] for h in result["hits"])
 

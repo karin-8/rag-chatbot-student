@@ -7,6 +7,7 @@ retrievable pieces before you can embed anything.
 Run this once (and again any time the documents change):
     python -m src.ingest
 """
+import hashlib
 from pathlib import Path
 
 import chromadb
@@ -15,6 +16,11 @@ from sentence_transformers import SentenceTransformer
 DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "policies.txt"
 DB_PATH = Path(__file__).resolve().parent.parent / "chroma_db"
 COLLECTION_NAME = "policies"
+
+# A short fingerprint of the source text. It changes whenever the documents
+# change, and every answer logs it, so a wrong answer can be traced back to
+# the exact knowledge it came from.
+KB_VERSION = hashlib.sha256(DATA_PATH.read_bytes()).hexdigest()[:12]
 
 # TODO I1: load the same embedding model you used in your Week 5 notebook
 # (all-MiniLM-L6-v2, on the CPU).
@@ -39,7 +45,7 @@ def build_index():
     # TODO I3: open a persistent Chroma client that stores its files at
     # DB_PATH, delete any old collection called COLLECTION_NAME (so running
     # this twice is safe), then create a fresh collection that compares
-    # vectors by cosine distance.
+    # vectors by cosine distance and records KB_VERSION in its metadata.
     collection = ...
 
     # TODO I4: embed the chunks (normalized, as in Colab) and add them to the
@@ -48,7 +54,7 @@ def build_index():
     # splitting, not handed to you pre-labeled.
     ...
 
-    print(f"Indexed {len(chunks)} chunks into {DB_PATH}")
+    print(f"Indexed {len(chunks)} chunks into {DB_PATH} (kb_version {KB_VERSION})")
 
 
 if __name__ == "__main__":

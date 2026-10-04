@@ -1,0 +1,91 @@
+[
+  {
+    "id": "support_hours",
+    "category": "technical support",
+    "question": "What are your technical support hours?",
+    "variants": [
+      "Is technical support available on weekends?",
+      "Can I get technical help in the middle of the night?"
+    ],
+    "must_include": ["24/7"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "returns_defective",
+    "category": "returns",
+    "question": "My item arrived defective and I want to return it online, what happens?",
+    "variants": [
+      "The product I ordered online is broken. How do I send it back?",
+      "Who pays shipping when I return a faulty item?"
+    ],
+    "must_include": ["messenger", "10 km"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "returns_in_store",
+    "category": "returns",
+    "question": "What are your in-store return hours?",
+    "variants": [
+      "Can I bring an item back to the shop? When?",
+      "What time can I return something in person?"
+    ],
+    "must_include": ["8:00", "17:00"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "delivery_lost",
+    "category": "delivery",
+    "question": "What should I do if my parcel is lost?",
+    "variants": [
+      "My package never arrived, who do I contact?",
+      "The courier lost my order. What now?"
+    ],
+    "must_include": ["courier"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "refund_time",
+    "category": "refund",
+    "question": "How long does a refund take to process?",
+    "variants": [
+      "When will I get my money back?",
+      "How many days until my refund arrives?"
+    ],
+    "must_include": ["8 business days"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "account_reset",
+    "category": "account",
+    "question": "How do I reset my LumaBox account password?",
+    "variants": [
+      "I forgot my password, how do I log in?",
+      "I can't sign in to my account."
+    ],
+    "must_include": ["Forgot password"],
+    "expected_action": "answer"
+  },
+  {
+    "id": "out_of_scope_general",
+    "category": "out of scope",
+    "question": "What's the weather like today?",
+    "variants": [
+      "Who won the football match last night?",
+      "Can you recommend a good restaurant?"
+    ],
+    "must_include": [],
+    "expected_action": "refuse"
+  },
+  {
+    "id": "out_of_scope_tricky",
+    "category": "out of scope",
+    "question": "How much is the LumaBox X999?",
+    "variants": [
+      "Does LumaBox ship to the moon?",
+      "Is LumaBox a good company to invest in?"
+    ],
+    "must_include": [],
+    "expected_action": "refuse",
+    "known_issue": "These share words with the policies and score above the refusal threshold, so only the model's own 'I do not know' stops them (POLICY.md P6)."
+  }
+]

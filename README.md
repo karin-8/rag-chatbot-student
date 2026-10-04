@@ -16,5 +16,5 @@ vector database.
    `git clone`: during the workshop you'll turn `rag-chatbot-student/` into
    your own git repository, starting from an empty history.
 2. Open `student-guide/index.html` in your browser and complete the
-   **Before class** module at home. It downloads about 1.1 GB of model
+   **Appendix A: Before class** at home. It downloads about 1.1 GB of model
    weights, so do it on a good connection.

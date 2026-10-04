@@ -1,0 +1,11 @@
+# Prompt changelog
+
+Every prompt is a file in this folder, and `PROMPT_VERSION` in `src/rag.py`
+says which one is live. Never edit a released prompt in place: add a new
+version, run the quality gate (`python -m src.gate --prompt <version>`),
+and record the result here. Rolling back is then a one-line change.
+
+| Version | Status | What changed | Gate result |
+|---|---|---|---|
+| v1 | **live** | The Week 5 Colab prompt: answer briefly, only from the context, say "I do not know" otherwise. | Baseline |
+| v2 | rejected | Friendlier persona; "answer by meaning"; "always give a helpful, complete answer". Aimed at the "I do not know" replies to paraphrased questions. | Rejected: `out of scope` and `refund` dropped below baseline. Without the refusal instruction it invents answers, e.g. a price for a product that doesn't exist. |
