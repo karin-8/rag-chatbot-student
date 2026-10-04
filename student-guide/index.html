@@ -320,17 +320,22 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
     <div class="step-h"><input type="checkbox" class="chk"><span class="n">Step 1</span><h3>Open the project and activate the venv</h3></div>
     <div class="step-b">
       <p>Open the <code>rag-chatbot-student</code> folder with <b>File → Open Folder</b>, then <b>Terminal → New Terminal</b>.</p>
-      <p><b>No <code>.venv</code> folder in the project yet?</b> Create the virtual environment first. This is <a href="#pre">Appendix A</a>, Step 4; if you skipped it, tell the facilitator, because the install below downloads over 1&nbsp;GB:</p>
+      <p><b>No <code>.venv</code> folder in the project yet?</b> Create the virtual environment, activate it, install the libraries and download the models. This is <a href="#pre">Appendix A</a>, Steps 4–5; if you skipped it, tell the facilitator, because this downloads over 1&nbsp;GB:</p>
       <div class="pair">
-        <figure class="code" data-file="Windows"><pre>python -m venv .venv</pre></figure>
-        <figure class="code" data-file="Mac / Linux"><pre>python3 -m venv .venv</pre></figure>
+        <figure class="code" data-file="Windows"><pre>python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python setup_check.py</pre></figure>
+        <figure class="code" data-file="Mac / Linux"><pre>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python setup_check.py</pre></figure>
       </div>
-      <p>Then, whenever the prompt doesn't start with <code>(.venv)</code>, activate it:</p>
+      <p><b>Already have <code>.venv</code>?</b> Just activate it whenever the prompt doesn't start with <code>(.venv)</code>:</p>
       <div class="pair">
         <figure class="code" data-file="Windows"><pre>.venv\Scripts\activate</pre></figure>
         <figure class="code" data-file="Mac / Linux"><pre>source .venv/bin/activate</pre></figure>
       </div>
-      <p>If you just created the venv, install the libraries now: <code>pip install -r requirements.txt</code>, then <code>python setup_check.py</code> (without <code>--offline</code>) to download the models.</p>
       <p>Check the bottom-right corner of VS Code shows <code>.venv</code> as the Python interpreter. If not: <code>Ctrl+Shift+P</code> → <b>Python: Select Interpreter</b> → <code>.venv</code>.</p>
     </div>
   </div>
