@@ -22,8 +22,8 @@ COLLECTION_NAME = "policies"
 # the exact knowledge it came from.
 KB_VERSION = hashlib.sha256(DATA_PATH.read_bytes()).hexdigest()[:12]
 
-# TODO I1: load the same embedding model you used in your Week 5 notebook
-# (all-MiniLM-L6-v2, on the CPU).
+# TODO I1: load the embedding model "sentence-transformers/all-MiniLM-L6-v2"
+# with SentenceTransformer, on the CPU (device="cpu").
 embedding_model = ...
 
 
@@ -48,7 +48,7 @@ def build_index():
     # vectors by cosine distance and records KB_VERSION in its metadata.
     collection = ...
 
-    # TODO I4: embed the chunks (normalized, as in Colab) and add them to the
+    # TODO I4: embed the chunks (with normalize_embeddings=True) and add them to the
     # collection with generic ids: chunk_0, chunk_1, ... There's no natural
     # "returns"/"delivery" label anymore, because the chunks were derived by
     # splitting, not handed to you pre-labeled.

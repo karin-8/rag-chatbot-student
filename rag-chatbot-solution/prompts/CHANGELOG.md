@@ -7,5 +7,5 @@ and record the result here. Rolling back is then a one-line change.
 
 | Version | Status | What changed | Gate result |
 |---|---|---|---|
-| v1 | **live** | The Week 5 Colab prompt: answer briefly, only from the context, say "I do not know" otherwise. | Baseline |
+| v1 | **live** | The original prompt: answer briefly, only from the context, say "I do not know" otherwise. | Baseline |
 | v2 | rejected | Friendlier persona; "answer by meaning"; "always give a helpful, complete answer". Aimed at the "I do not know" replies to paraphrased questions. | Rejected: `out of scope` and `refund` dropped below baseline. Without the refusal instruction it invents answers, e.g. a price for a product that doesn't exist. |

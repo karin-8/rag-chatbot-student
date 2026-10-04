@@ -47,20 +47,21 @@ _collection = ...
 def retrieve(query, k=2):
     """Return the top-k chunks for a query.
 
-    TODO R2: embed the query the same way the chunks were embedded, then ask
-    _collection for the k nearest chunks instead of doing the NumPy
-    dot-product search you used in Colab.
+    TODO R2: embed the query the same way the chunks were embedded
+    (embedding_model, normalize_embeddings=True), then ask _collection for
+    the k nearest chunks.
 
-    Return the same shape your Colab retrieve() returned: a list of dicts,
-    each with "id", "text" and "similarity" keys. Note that Chroma reports
-    *distances*, not similarities.
+    Return a list of dicts, best match first, each with "id", "text" and
+    "similarity" keys. Note that Chroma reports *distances*, not
+    similarities.
     """
     raise NotImplementedError("TODO R2: query Chroma and shape the results")
 
 
 # ------------------------------------------------- Module 2.1: generation
-# TODO R3: load the GENERATOR_MODEL_NAME tokenizer and model, as in your
-# Week 5 notebook. Move the model to `device` and put it in eval mode.
+# TODO R3: load the tokenizer and model for GENERATOR_MODEL_NAME
+# (google/flan-t5-base) with transformers' AutoTokenizer and
+# AutoModelForSeq2SeqLM. Move the model to `device` and put it in eval mode.
 tokenizer = ...
 generator = ...
 
@@ -80,8 +81,15 @@ def build_prompt(question, context, version=None):
 
 
 def generate_answer(prompt):
-    """TODO R4: paste this straight from your Week 5 notebook - no changes."""
-    raise NotImplementedError("TODO R4: paste generate_answer from Colab")
+    """TODO R4: run the model on the prompt and return its answer as text.
+
+    - tokenize the prompt as PyTorch tensors on `device`, without truncating;
+    - raise ValueError if it's longer than 512 tokens (flan-t5's input limit);
+    - generate greedily (do_sample=False), at most 64 new tokens, inside
+      torch.inference_mode();
+    - decode the output, skipping special tokens.
+    """
+    raise NotImplementedError("TODO R4: write generate_answer")
 
 
 # ------------------------------------------------- Module 2.2: policy

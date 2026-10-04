@@ -1,9 +1,9 @@
 # RAG Chatbot - Starter
 
 Local, offline RAG chatbot over a small set of fictional LumaBox support
-policies - the same use case, models, and functions from your Week 5 Colab
-activity (`all-MiniLM-L6-v2` for embeddings, `flan-t5-base` for generation),
-rebuilt the way AI engineers run it for real: a persistent knowledge base, a
+policies (`sentence-transformers/all-MiniLM-L6-v2` for embeddings,
+`google/flan-t5-base` for generation, Chroma as the vector database),
+built the way AI engineers run it for real: a persistent knowledge base, a
 versioned prompt, an enforced policy, a golden dataset with a quality gate,
 a CI/CD pipeline, and tracing for continuous monitoring.
 
