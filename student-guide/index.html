@@ -44,6 +44,12 @@ body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);
 .menu-btn,.theme-btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--text);border-radius:6px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
 .menu-btn:hover,.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .menu-btn{display:none;font-size:14px}
+.repo-btn{border:1px solid var(--accent);background:var(--accent);color:var(--on-ink);border-radius:6px;padding:6px 10px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.repo-btn:hover{background:var(--surface);color:var(--accent)}
+@media (max-width:600px){
+  .top{gap:8px;padding:0 12px}
+  .top .brand span,.overall .bar{display:none}
+}
 
 /* layout */
 .shell{display:grid;grid-template-columns:288px minmax(0,1fr)}
@@ -176,6 +182,7 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
   <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">Menu</button>
   <div class="brand">From Colab to Code <span>/ Workshop Guide</span></div>
   <div class="spacer"></div>
+  <a class="repo-btn" href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener" title="The project on GitHub: click Code, then Download ZIP">Get the code</a>
   <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">Dark mode</button>
   <div class="overall" title="Required in-class steps only. Stretch and homework aren't counted."><span id="overallTxt">0%</span><div class="bar"><i id="overallBar"></i></div></div>
 </header>
@@ -191,7 +198,7 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
   <h1>From Colab to Code: Build Your RAG Chatbot for Real</h1>
   <p class="lead">A 2-hour build workshop. Keep this guide open in one window and VS Code in the other, then work through the modules in order.</p>
 
-  <div class="warn"><b class="t">Before class</b><p>Complete <a href="#pre">Appendix A: Before class</a> at home. It installs the tools and downloads about 1.1&nbsp;GB of model weights, which won't work on shared classroom Wi-Fi.</p></div>
+  <div class="warn"><b class="t">Before class</b><p>Complete <a href="#pre">Appendix A: Before class</a> at home. It installs the tools and downloads about 1.1&nbsp;GB of model weights, which won't work on shared classroom Wi-Fi.</p><p>Get the project from <a href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener">github.com/karin-8/rag-chatbot-student</a>, or <a href="https://github.com/karin-8/rag-chatbot-student/archive/refs/heads/main.zip">download it as a ZIP</a> directly.</p></div>
 
   <div class="outcomes">
     <h4>Today's mission</h4>
@@ -1559,7 +1566,8 @@ python -m src.review --sample 5</pre></figure>
   <div class="step" data-id="pre-4">
     <div class="step-h"><input type="checkbox" class="chk"><span class="n">Step 4</span><h3>Create the project's virtual environment</h3></div>
     <div class="step-b">
-      <p><b>Get the starter.</b> On <a href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener">github.com/karin-8/rag-chatbot-student</a>, click <b>Code → Download ZIP</b> and unzip it somewhere easy to find, such as your Documents folder. Use Download ZIP rather than <code>git clone</code>: in class you'll turn the starter into <em>your own</em> repository, starting from an empty history.</p>
+      <p><b>Get the starter.</b> <a href="https://github.com/karin-8/rag-chatbot-student/archive/refs/heads/main.zip">Download the project as a ZIP</a> (or open <a href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener">github.com/karin-8/rag-chatbot-student</a> and click <b>Code → Download ZIP</b>), then unzip it somewhere easy to find, such as your Documents folder. Use the ZIP rather than <code>git clone</code>: in class you'll turn the starter into <em>your own</em> repository, starting from an empty history.</p>
+      <p>The unzipped folder, <code>rag-chatbot-student-main</code>, holds three folders: <code>rag-chatbot-student</code> (the project you'll work in), <code>student-guide</code> (this guide) and <code>rag-chatbot-solution</code> (a finished version for checking your work).</p>
       <p>Open the <code>rag-chatbot-student</code> folder inside the unzipped download (not the outer folder) with <b>File → Open Folder</b>, then <b>Terminal → New Terminal</b>.</p>
       <p>A <b>virtual environment</b> (venv) is a private folder of libraries for this one project. It keeps today's library versions from clashing with anything else on your machine, and anyone can rebuild it exactly from <code>requirements.txt</code>.</p>
       <div class="pair">
