@@ -319,12 +319,19 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
   <div class="step" data-id="m0-1">
     <div class="step-h"><input type="checkbox" class="chk"><span class="n">Step 1</span><h3>Open the project and activate the venv</h3></div>
     <div class="step-b">
-      <p>Open the <code>rag-chatbot-student</code> folder with <b>File → Open Folder</b>, then <b>Terminal → New Terminal</b>. If the prompt doesn't start with <code>(.venv)</code>, activate it:</p>
+      <p>Open the <code>rag-chatbot-student</code> folder with <b>File → Open Folder</b>, then <b>Terminal → New Terminal</b>.</p>
+      <p><b>No <code>.venv</code> folder in the project yet?</b> Create the virtual environment first. This is <a href="#pre">Appendix A</a>, Step 4; if you skipped it, tell the facilitator, because the install below downloads over 1&nbsp;GB:</p>
+      <div class="pair">
+        <figure class="code" data-file="Windows"><pre>python -m venv .venv</pre></figure>
+        <figure class="code" data-file="Mac / Linux"><pre>python3 -m venv .venv</pre></figure>
+      </div>
+      <p>Then, whenever the prompt doesn't start with <code>(.venv)</code>, activate it:</p>
       <div class="pair">
         <figure class="code" data-file="Windows"><pre>.venv\Scripts\activate</pre></figure>
         <figure class="code" data-file="Mac / Linux"><pre>source .venv/bin/activate</pre></figure>
       </div>
-      <p>Check the bottom-right corner of VS Code shows <code>.venv</code> as the Python interpreter. If not: <code>Ctrl+Shift+P</code> → <b>Python: Select Interpreter</b> → <code>.venv</code>. No <code>.venv</code> folder at all? You skipped <a href="#pre">Appendix A</a>. Tell the facilitator now.</p>
+      <p>If you just created the venv, install the libraries now: <code>pip install -r requirements.txt</code>, then <code>python setup_check.py</code> (without <code>--offline</code>) to download the models.</p>
+      <p>Check the bottom-right corner of VS Code shows <code>.venv</code> as the Python interpreter. If not: <code>Ctrl+Shift+P</code> → <b>Python: Select Interpreter</b> → <code>.venv</code>.</p>
     </div>
   </div>
 
@@ -1707,6 +1714,7 @@ git diff</pre></figure>
     <tr><td><code>git</code> is not recognized</td><td>git isn't installed, or VS Code was open during the install.</td><td>Install from <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a>, then close and reopen VS Code completely.</td></tr>
     <tr><td><code>... cannot be loaded because running scripts is disabled</code></td><td>PowerShell blocks the activate script by default.</td><td><code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>, then activate again.</td></tr>
     <tr><td>Prompt doesn't show <code>(.venv)</code></td><td>The venv isn't active in this terminal.</td><td>Windows: <code>.venv\Scripts\activate</code>. Mac/Linux: <code>source .venv/bin/activate</code>. Select <code>.venv</code> with <b>Python: Select Interpreter</b> so new terminals do it for you.</td></tr>
+    <tr><td>Activating fails because there's no <code>.venv</code> folder</td><td>The virtual environment was never created in this project folder.</td><td>Create it: <code>python -m venv .venv</code> (Mac/Linux: <code>python3 -m venv .venv</code>), activate it, then <code>pip install -r requirements.txt</code> and <code>python setup_check.py</code>. See <a href="#pre">Appendix A</a>, Step 4.</td></tr>
     <tr><td><code>ModuleNotFoundError: No module named 'chromadb'</code> (or <code>torch</code>, <code>transformers</code>, …)</td><td>You're using a Python without the libraries, usually because the venv isn't active.</td><td>Activate the venv. If it's active, run <code>pip install -r requirements.txt</code>.</td></tr>
     <tr><td>Imports underlined in red in the editor, but the code runs</td><td>VS Code is looking at a different Python than your terminal.</td><td><code>Ctrl+Shift+P</code> → <b>Python: Select Interpreter</b> → pick <code>.venv</code>.</td></tr>
     <tr><td>Model download hangs, or fails with an SSL / connection error</td><td>Slow or filtered network (campus proxies often block large downloads).</td><td>Run <code>python setup_check.py</code> at home or on a phone hotspot. Once it passes, the models are cached and no network is needed.</td></tr>
