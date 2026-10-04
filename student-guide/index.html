@@ -1606,12 +1606,18 @@ source .venv/bin/activate</pre></figure>
 <pre>[ok]   Python 3.12
 [ok]   running inside a virtual environment (...)
 [ok]   git is installed
-[ok]   packages import (torch ..., transformers ..., ...)
-[ok]   embedding model loads (sentence-transformers/all-MiniLM-L6-v2, vector size 384)
-[ok]   generator loads and answers (google/flan-t5-base says: 'blue')
+Importing libraries (the first run can take a minute or two)...
+[ok]   torch 2.x imports (20s)
+[ok]   transformers 5.x imports (25s)
+[ok]   sentence-transformers 5.x imports (30s)
+[ok]   chromadb 1.x imports (3s)
+[....] loading sentence-transformers/all-MiniLM-L6-v2, downloads ~90 MB the first time...
+[ok]   embedding model loads (sentence-transformers/all-MiniLM-L6-v2, vector size 384, 15s)
+[....] loading google/flan-t5-base, downloads ~1 GB the first time...
+[ok]   generator loads and answers (google/flan-t5-base says: 'blue', 120s)
 
 All checks passed.</pre>
-        <p style="margin-top:8px">You may also see some warnings and progress bars. Only <code>[FAIL]</code> lines matter. Each one tells you what to fix.</p></div>
+        <p style="margin-top:8px">Your versions and times will differ. While a step runs, a spinner counts the seconds; during the downloads, progress bars appear instead. Nothing is frozen, so let it finish. You may also see some warnings. Only <code>[FAIL]</code> lines matter. Each one tells you what to fix.</p></div>
       <div class="note"><b class="t">Can't get it working?</b><p>Check <a href="#trouble">Troubleshooting</a> first. If you're still stuck, contact the facilitator <em>before</em> class, or set up the <a href="#trouble-codespaces">Codespaces fallback</a>, which runs everything in your browser.</p></div>
     </div>
   </div>
