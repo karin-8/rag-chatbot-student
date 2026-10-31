@@ -1,8 +1,8 @@
 """The agent: retrieval, a versioned prompt, a policy check, and generation.
 
-Module 1.2 builds the retrieval half (TODO R1-R2), Module 2.1 the
-generation half with a versioned prompt (TODO R3-R4), and Module 2.2 the
-policy check (TODO R5-R6). rag_answer() at the bottom wires them together
+Module 1 builds the retrieval half (TODO R1-R2), Module 2 the generation
+half with a versioned prompt (TODO R3-R4) and the policy check
+(TODO R5-R6). rag_answer() at the bottom wires them together
 and records what the monitoring in Module 5 needs. It's already written.
 """
 import time
@@ -22,7 +22,7 @@ EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 GENERATOR_MODEL_NAME = "google/flan-t5-base"
 
 # Which prompt in prompts/ is live. Changing it is a release: run the
-# quality gate first (Module 3.2) and record the change in prompts/CHANGELOG.md.
+# quality gate first (Module 3, Task 3) and record the change in prompts/CHANGELOG.md.
 PROMPT_VERSION = "v1"
 
 # What the bot says when its policy says not to answer (POLICY.md, P3-P4).
@@ -34,7 +34,7 @@ REFUSAL_MESSAGE = (
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-# ------------------------------------------------- Module 1.2: retrieval
+# ------------------------------------------------- Module 1: retrieval
 # TODO R1: load the embedding model (EMBEDDING_MODEL_NAME, on the CPU), then
 # connect to the collection ingest.py built: same path, same name, but get
 # it rather than create it. If it says the collection doesn't exist, run
@@ -58,7 +58,7 @@ def retrieve(query, k=2):
     raise NotImplementedError("TODO R2: query Chroma and shape the results")
 
 
-# ------------------------------------------------- Module 2.1: generation
+# ------------------------------------------------- Module 2: generation
 # TODO R3: load the tokenizer and model for GENERATOR_MODEL_NAME
 # (google/flan-t5-base) with transformers' AutoTokenizer and
 # AutoModelForSeq2SeqLM. Move the model to `device` and put it in eval mode.
@@ -92,9 +92,9 @@ def generate_answer(prompt):
     raise NotImplementedError("TODO R4: write generate_answer")
 
 
-# ------------------------------------------------- Module 2.2: policy
+# ------------------------------------------------- Module 2: policy
 # TODO R5: choose the threshold from the similarity scores you printed in
-# Module 1.2: below every in-scope question, above the clearly
+# Module 1, Task 3: below every in-scope question, above the clearly
 # out-of-scope ones.
 SIMILARITY_THRESHOLD = ...
 
@@ -117,7 +117,7 @@ def kb_version():
 def rag_answer(question, k=2, search_query=None, enforce_policy=True, prompt_version=None):
     """Answer a question and return everything a trace needs.
 
-    enforce_policy=False skips the policy check (Module 2.2 compares both).
+    enforce_policy=False skips the policy check (Module 2, Task 2 compares both).
     prompt_version overrides PROMPT_VERSION (the quality gate uses it).
     """
     version = prompt_version or PROMPT_VERSION

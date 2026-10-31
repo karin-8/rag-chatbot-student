@@ -1,9 +1,9 @@
-"""Print the top retrieval similarity for some questions (Module 1.2).
+"""Print the top retrieval similarity for some questions (Module 1, Task 3).
 
     python -m src.scores                          # the built-in examples
     python -m src.scores "my question" "another"  # your own questions
 
-Similarity runs from about 0 (unrelated) to 1 (same meaning). Module 2.2
+Similarity runs from about 0 (unrelated) to 1 (same meaning). Module 2, Task 3
 uses these numbers to choose the refusal threshold.
 """
 import sys

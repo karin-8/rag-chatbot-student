@@ -9,7 +9,7 @@ users asked.
 **Commit after each exercise.** Your git history should show separate
 points of progress, not one giant commit at the end - that history is part
 of what gets submitted. (Haven't run `git init` yet? See the guide's
-Appendix B.)
+"Getting Started", Task 3.)
 
 Submit by zipping this whole project folder, **including the `.git`
 folder**, and uploading it to [LMS link] by [due date].
@@ -37,7 +37,7 @@ policy answer and without ever inventing a price.
    what must it do for a product that isn't in the table? Name how each
    rule is enforced and tested.
 3. **Golden dataset.** Add at least three `"price"` rows (including one
-   product that isn't a LumaBox), each with variants. Then look at the
+   product that isn't a LumaBox), each with several wordings. Then look at the
    existing `out_of_scope_tricky` row: "How much is the LumaBox X999?" now
    retrieves a *real* price row. Run it and see what the bot says.
 4. **Gate.** Run `pytest` and `python -m src.gate`. With more chunks
@@ -81,7 +81,7 @@ paraphrases, typos, questions your documents don't cover, frustrated users.
    Then summarize: how many of each type, and which one hurts customers
    most.
 3. **Fix.** Fix at least **two failures of different types**. For every
-   fix: first add the failing question to `tests/golden.json`, watch it
+   fix: first add the failing question to `tests/golden.xlsx`, watch it
    fail, then fix, then run `pytest` and the gate. A knowledge gap is fixed
    by the content owner, not by the model, so for one of those, write the
    missing policy text into `data/policies.txt` as if you were LumaBox's
@@ -93,7 +93,30 @@ paraphrases, typos, questions your documents don't cover, frustrated users.
 
 **Deliverable:** `homework/monitoring_report.md` (the table, the summary,
 what you fixed and the gate result after each fix), plus the updated
-`POLICY.md`, `tests/golden.json` and baseline, each fix in its own commit.
+`POLICY.md`, `tests/golden.xlsx` and baseline, each fix in its own commit.
+
+---
+
+## Reflection — Where would you fix it? (required)
+
+Four things go wrong with the LumaBox bot after launch. For each one, write
+2-4 sentences in `homework/reflection.md`:
+
+- **Where** in the system you'd fix it: the knowledge, the prompt, the
+  policy, the tests and gate, the pipeline, monitoring, or something outside
+  the bot;
+- **what** you'd change;
+- **how you'd know** the fix worked.
+
+There is no single right answer. Show you understand how the parts fit
+together.
+
+1. A customer has asked about their refund three times. Each time the bot
+   says "I do not know" or refuses, and the customer is getting angry.
+2. LumaBox changes its refund time from 8 to 5 business days.
+3. A teammate writes a new prompt that makes the answers friendlier and
+   wants it live today.
+4. The day after a release, the refusal rate jumps from 20% to 60%.
 
 ---
 

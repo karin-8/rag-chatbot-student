@@ -18,10 +18,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from src.golden import load_golden
 from src.rag import PROMPT_VERSION, rag_answer
 
 TESTS_DIR = Path(__file__).resolve().parent.parent / "tests"
-GOLDEN_PATH = TESTS_DIR / "golden.json"
 BASELINE_PATH = TESTS_DIR / "gate_baseline.json"
 
 # A generated "I do not know" counts as declining, just like a policy refusal.
@@ -36,17 +36,16 @@ def passes(row, result):
 
 
 def run(prompt_version):
-    golden = json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
+    golden = load_golden()
     scores = defaultdict(lambda: {"passed": 0, "total": 0})
     failures = []
     for row in golden:
-        for question in [row["question"], *row["variants"]]:
-            result = rag_answer(question, prompt_version=prompt_version)
-            ok = passes(row, result)
-            scores[row["category"]]["total"] += 1
-            scores[row["category"]]["passed"] += ok
-            if not ok:
-                failures.append((row["category"], question, result["answer"]))
+        result = rag_answer(row["question"], prompt_version=prompt_version)
+        ok = passes(row, result)
+        scores[row["category"]]["total"] += 1
+        scores[row["category"]]["passed"] += ok
+        if not ok:
+            failures.append((row["category"], row["question"], result["answer"]))
     return dict(scores), failures
 
 

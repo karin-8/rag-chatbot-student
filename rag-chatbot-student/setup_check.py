@@ -111,6 +111,7 @@ for module, name in [
     ("transformers", "transformers"),
     ("sentence_transformers", "sentence-transformers"),
     ("chromadb", "chromadb"),
+    ("streamlit", "streamlit"),
 ]:
     try:
         with Working(f"importing {name}") as step:

@@ -9,7 +9,7 @@ a CI/CD pipeline, and tracing for continuous monitoring.
 
 Look for `TODO` comments (`git grep -n TODO`, or search in VS Code):
 `I1-I4` in `src/ingest.py`, `R1-R6` in `src/rag.py`, `T1` in
-`tests/test_retrieval.py`, and `T2` (rows for `tests/golden.json`) in
+`tests/test_retrieval.py`, and `T2` (rows for `tests/golden.xlsx`) in
 `tests/test_golden.py`. Everything else is already written.
 
 ## Before class
@@ -67,7 +67,7 @@ rag-chatbot/
 ├── prompts/                       # versioned prompts + CHANGELOG.md
 ├── POLICY.md                      # how the bot must behave, and how that's enforced
 ├── tests/test_retrieval.py        # TODO T1: one assertion
-├── tests/golden.json              # TODO T2: your golden dataset
+├── tests/golden.xlsx              # TODO T2: your golden dataset
 ├── tests/test_golden.py           # runs every golden question
 ├── src/gate.py                    # quality gate
 ├── src/main.py, app.py            # CLI and web front end

@@ -25,8 +25,8 @@ nothing enforces or tests is a wish, not a policy.
 - **P6 relies on the prompt alone.** Questions that share words with the
   policies ("How much is the LumaBox X999?") score above the threshold, so
   only the model's own "I do not know" stops an invented answer, and a
-  prompt change can remove that instruction (Module 2.2 shows what happens).
-  Tracked as a `known_issue` in `tests/golden.json`.
+  prompt change can remove that instruction (Module 2, Task 2 shows what happens).
+  Tracked as a `known_issue` in `tests/golden.xlsx`.
 - **P4 has no automated test yet.**
 
 ## Changing this policy
