@@ -46,9 +46,11 @@ body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);
 .menu-btn{display:none;font-size:14px}
 .repo-btn{border:1px solid var(--accent);background:var(--accent);color:var(--on-ink);border-radius:6px;padding:6px 10px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
 .repo-btn:hover{background:var(--surface);color:var(--accent)}
+.repo-btn.alt{background:none;color:var(--accent)}
+.repo-btn.alt:hover{background:var(--accent-bg)}
 @media (max-width:600px){
   .top{gap:8px;padding:0 12px}
-  .top .brand span,.overall .bar{display:none}
+  .top .brand span,.overall .bar,.repo-btn.alt{display:none}
 }
 
 /* layout */
@@ -199,6 +201,7 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
   <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">Menu</button>
   <div class="brand">RAG in Production <span>/ Workshop Guide</span></div>
   <div class="spacer"></div>
+  <a class="repo-btn alt" href="https://github.com/karin-8/rag-chatbot-student/blob/main/student-guide/RAG%20in%20Production.pptx" target="_blank" rel="noopener" title="The lecture slides (PowerPoint): click the download button on GitHub">Slides</a>
   <a class="repo-btn" href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener" title="The project on GitHub: click Code, then Download ZIP">Get the code</a>
   <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">Dark mode</button>
   <div class="overall" title="In-class tasks only. Homework and the challenge are not counted."><span id="overallTxt">0%</span><div class="bar"><i id="overallBar"></i></div></div>
@@ -219,6 +222,7 @@ th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute
       <li>Finish <a href="#pre">Appendix A: Pre-Class Setup</a> at home (about 30 minutes, downloads 1.1&nbsp;GB).</li>
       <li>Bring a <b>laptop</b> (Windows or Mac). Tablets cannot run the project; if no laptop is available, use the <a href="#trouble-codespaces">Codespaces fallback</a>.</li>
       <li>Get the code: <a href="https://github.com/karin-8/rag-chatbot-student/archive/refs/heads/main.zip">download the ZIP</a> or open <a href="https://github.com/karin-8/rag-chatbot-student" target="_blank" rel="noopener">github.com/karin-8/rag-chatbot-student</a>.</li>
+      <li>Lecture slides: <a href="https://github.com/karin-8/rag-chatbot-student/blob/main/student-guide/RAG%20in%20Production.pptx" target="_blank" rel="noopener">RAG in Production.pptx</a> (open it, then click the download button).</li>
     </ul>
   </div>
 
