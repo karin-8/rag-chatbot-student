@@ -7,7 +7,7 @@ No earlier notebook needed.
 
 | Folder | What it is |
 |---|---|
-| [`student-guide/`](student-guide/index.html) | The workshop guide: a scenario, tasks and expected results for each module. Download and open `index.html` in your browser. |
+| [`student-guide/`](student-guide/index.html) | The workshop guide (`index.html`: a scenario, tasks and expected results for each module) and the lecture slides (`RAG in Production.pptx`). |
 | [`rag-chatbot-student/`](rag-chatbot-student/) | The starter project you'll work in. |
 
 ## Getting started
