@@ -31,6 +31,7 @@ GOLDEN = load_golden()
 
 def cases(action):
     """One pytest case per question row with this action."""
+    params = []
     for row in GOLDEN:
         if row["expected_action"] != action:
             continue
@@ -40,7 +41,8 @@ def cases(action):
         marks = []
         if row.get("known_issue"):
             marks = [pytest.mark.xfail(reason=row["known_issue"], strict=True)]
-        yield pytest.param(row, row["question"], id=f'{row["id"]}: {row["question"]}', marks=marks)
+        params.append(pytest.param(row, row["question"], id=f'{row["id"]}: {row["question"]}', marks=marks))
+    return params
 
 
 @pytest.mark.parametrize("row, question", cases("answer"))
