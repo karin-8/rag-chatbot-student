@@ -33,7 +33,7 @@ policy answer and without ever inventing a price.
    name run together, e.g. `"LMX-201 LumaBox X100"`); keep it as is. Add
    the sentences to the **same** collection as the policy chunks, with a
    `metadatas` field like `{"source": "price"}`.
-2. **Policy.** Update `POLICY.md`: what may the bot say about prices, and
+2. **Policy.** Update `AGENT_POLICY.md`: what may the bot say about prices, and
    what must it do for a product that isn't in the table? Name how each
    rule is enforced and tested.
 3. **Golden dataset.** Add at least three `"price"` rows (including one
@@ -84,16 +84,16 @@ paraphrases, typos, questions your documents don't cover, frustrated users.
    fix: first add the failing question to `tests/golden.xlsx`, watch it
    fail, then fix, then run `pytest` and the gate. A knowledge gap is fixed
    by the content owner, not by the model, so for one of those, write the
-   missing policy text into `data/policies.txt` as if you were LumaBox's
+   missing policy text into `data/lumabox_policies.txt` as if you were LumaBox's
    support team, and re-run `python -m src.ingest`.
 4. **Sentiment.** Look at the turns flagged with negative sentiment. What
-   should the bot do for a frustrated customer? Add it to `POLICY.md` as a
+   should the bot do for a frustrated customer? Add it to `AGENT_POLICY.md` as a
    new rule, with how you would enforce and test it. (You don't have to
    implement it.)
 
 **Deliverable:** `homework/monitoring_report.md` (the table, the summary,
 what you fixed and the gate result after each fix), plus the updated
-`POLICY.md`, `tests/golden.xlsx` and baseline, each fix in its own commit.
+`AGENT_POLICY.md`, `tests/golden.xlsx` and baseline, each fix in its own commit.
 
 ---
 

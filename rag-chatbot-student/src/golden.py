@@ -7,7 +7,7 @@ question, on the sheet named "golden":
                    close to the policy text, the rest are how customers ask)
   category         topic; the gate reports a pass rate per category
   question         one wording - every row is a separate test
-  must_include     short facts copied exactly from data/policies.txt,
+  must_include     short facts copied exactly from data/lumabox_policies.txt,
                    separated by ";" (leave empty for "refuse" rows)
   expected_action  "answer" or "refuse"
   known_issue      optional: why this question is a known, accepted failure

@@ -2,7 +2,7 @@
 
 **Version 1** · Owner: the LumaBox support team · Reviewed with every release.
 
-`data/policies.txt` says *what LumaBox's rules are*. This document says
+`data/lumabox_policies.txt` says *what LumaBox's rules are*. This document says
 *how the bot behaves*: what it answers, what it refuses, and what it must
 never do.
 

@@ -1,4 +1,4 @@
-"""Build the local Chroma index from data/policies.txt.
+"""Build the local Chroma index from data/lumabox_policies.txt.
 
 Unlike a clean JSON array, this is one raw text file - real documents
 usually arrive this way. You have to decide how to split it into
@@ -13,7 +13,7 @@ from pathlib import Path
 import chromadb
 from sentence_transformers import SentenceTransformer
 
-DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "policies.txt"
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "lumabox_policies.txt"
 DB_PATH = Path(__file__).resolve().parent.parent / "chroma_db"
 COLLECTION_NAME = "policies"
 
@@ -30,7 +30,7 @@ embedding_model = ...
 def chunk_documents():
     """Split the raw policy text into a list of chunk strings.
 
-    TODO I2: open data/policies.txt and look at its shape first. Then
+    TODO I2: open data/lumabox_policies.txt and look at its shape first. Then
     return one string per policy:
       - policies are separated by blank lines
       - strip surrounding whitespace from each piece

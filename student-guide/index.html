@@ -313,7 +313,7 @@ git config --global user.email "you@example.com"</pre></figure>
   <div class="eyebrow">Module 1 · 10–35 min</div>
   <h1>Knowledge Base Construction</h1>
 
-  <div class="scenario"><b class="t">Scenario</b><p>LumaBox's support policies arrive as one raw text file, <code>data/policies.txt</code>. Turn it into a knowledge base the bot can search, and check how well the search works.</p><div class="sflow" aria-hidden="true"><div class="fn"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><b>Raw text</b><small>policies.txt</small></div><div class="fa"><code>ingest.py</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13"/><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg><b>Knowledge base</b><small>chroma_db/</small></div><div class="fa"><code>retrieve()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><b>Relevant chunks</b><small>+ similarity</small></div></div></div>
+  <div class="scenario"><b class="t">Scenario</b><p>LumaBox's support policies arrive as one raw text file, <code>data/lumabox_policies.txt</code>. Turn it into a knowledge base the bot can search, and check how well the search works.</p><div class="sflow" aria-hidden="true"><div class="fn"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><b>Raw text</b><small>lumabox_policies.txt</small></div><div class="fa"><code>ingest.py</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13"/><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg><b>Knowledge base</b><small>chroma_db/</small></div><div class="fa"><code>retrieve()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><b>Relevant chunks</b><small>+ similarity</small></div></div></div>
 
   <div class="step" data-id="m1-1">
     <div class="step-h"><input type="checkbox" class="chk"><span class="n">Task 1</span><h3>Build the knowledge base (<code>src/ingest.py</code>, TODO I1–I4)</h3></div>
@@ -321,7 +321,7 @@ git config --global user.email "you@example.com"</pre></figure>
       <p class="lbl">Instructions</p>
       <ol>
         <li><b>I1:</b> load the embedding model <code>sentence-transformers/all-MiniLM-L6-v2</code> on the CPU.</li>
-        <li><b>I2:</b> write <code>chunk_documents()</code>: split <code>data/policies.txt</code> on blank lines, strip each piece, drop the title line. Check it:
+        <li><b>I2:</b> write <code>chunk_documents()</code>: split <code>data/lumabox_policies.txt</code> on blank lines, strip each piece, drop the title line. Check it:
           <figure class="code" data-file="terminal"><pre>python -c "from src.ingest import chunk_documents as c; print(len(c()))"</pre></figure>
         </li>
         <li><b>I3–I4:</b> in <code>build_index()</code>:
@@ -465,7 +465,7 @@ git commit -m "Build knowledge base and retrieval"</pre></figure>
   <div class="eyebrow">Module 2 · 35–60 min</div>
   <h1>Agent Implementation</h1>
 
-  <div class="scenario"><b class="t">Scenario</b><p>The bot can now retrieve evidence; next, it must generate answers. A teammate has written a "better" prompt, v2 (see <code>prompts/CHANGELOG.md</code>). Find out what happens when the bot's only rules live in its prompt, then enforce the rules in code. Read <code>POLICY.md</code> for how the bot must behave.</p><div class="sflow" aria-hidden="true"><div class="fn"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg><b>Question</b></div><div class="fa"><code>retrieve()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><b>Evidence</b><small>top 2 chunks</small></div><div class="fa"><code>should_refuse()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><b>Policy</b><small>POLICY.md</small></div><div class="fa"><code>flan-t5</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H10l-5 4v-4H4z"/><path d="M9 10l2 2 4-4"/></svg><b>Answer</b><small>or refusal</small></div></div></div>
+  <div class="scenario"><b class="t">Scenario</b><p>The bot can now retrieve evidence; next, it must generate answers. A teammate has written a "better" prompt, v2 (see <code>prompts/CHANGELOG.md</code>). Find out what happens when the bot's only rules live in its prompt, then enforce the rules in code. Read <code>AGENT_POLICY.md</code> for how the bot must behave.</p><div class="sflow" aria-hidden="true"><div class="fn"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg><b>Question</b></div><div class="fa"><code>retrieve()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg><b>Evidence</b><small>top 2 chunks</small></div><div class="fa"><code>should_refuse()</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><b>Policy</b><small>AGENT_POLICY.md</small></div><div class="fa"><code>flan-t5</code><svg viewBox="0 0 40 10"><path d="M1 5h36M33 1.5 37 5l-4 3.5"/></svg></div><div class="fn"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H10l-5 4v-4H4z"/><path d="M9 10l2 2 4-4"/></svg><b>Answer</b><small>or refusal</small></div></div></div>
 
   <div class="step" data-id="m2-1">
     <div class="step-h"><input type="checkbox" class="chk"><span class="n">Task 1</span><h3>Implement answer generation (TODO R3–R4)</h3></div>
@@ -572,7 +572,7 @@ git commit -m "Add versioned prompt and enforced scope policy"</pre></figure>
 
 
 def should_refuse(hits):
-    """POLICY.md P1: refuse when nothing retrieved is relevant enough."""
+    """AGENT_POLICY.md P1: refuse when nothing retrieved is relevant enough."""
     return not hits or hits[0]["similarity"] &lt; SIMILARITY_THRESHOLD</pre></figure>
         <p>Choose a value based on your own scores rather than copying this one.</p>
         </div></details>
@@ -592,7 +592,7 @@ How much is the LumaBox X999?
   with policy    : $99</pre>
         <ul style="margin-top:8px">
           <li>Weather and football are refused, whatever the prompt says.</li>
-          <li>"Moon" and "X999" are still answered. This is a known limitation, documented in <code>POLICY.md</code>.</li>
+          <li>"Moon" and "X999" are still answered. This is a known limitation, documented in <code>AGENT_POLICY.md</code>.</li>
           <li>The CLI answers the in-scope question and refuses the weather question.</li>
         </ul>
       </div>
@@ -617,7 +617,7 @@ How much is the LumaBox X999?
             <tr><th>Column</th><th>What to put in it</th></tr>
             <tr><td><code>id</code></td><td>A short name for the case. Rows with the same id are different wordings of the same question.</td></tr>
             <tr><td><code>question</code></td><td>One wording. Write one close to the policy text, then at least 2 the way a customer would type.</td></tr>
-            <tr><td><code>must_include</code></td><td>Short facts copied exactly from <code>data/policies.txt</code>, e.g. <code>8 business days</code>. Separate several with <code>;</code></td></tr>
+            <tr><td><code>must_include</code></td><td>Short facts copied exactly from <code>data/lumabox_policies.txt</code>, e.g. <code>8 business days</code>. Separate several with <code>;</code></td></tr>
             <tr><td><code>expected_action</code></td><td><code>answer</code> or <code>refuse</code> (pick from the drop-down)</td></tr>
           </table>
         </li>
@@ -744,7 +744,7 @@ GATE FAILED: out of scope, refund got worse than the baseline. Don't ship this c
       <p class="lbl">Instructions</p>
       <ol>
         <li><b>Knowledge:</b> in <code>src/ingest.py</code>, read <code>homework/model_prices.xlsx</code> with <code>pandas.read_excel</code>, turn each row into a sentence, and add the sentences to the <em>same</em> collection with <code>metadatas={"source": "price"}</code>.</li>
-        <li><b>Policy:</b> in <code>POLICY.md</code>, add rules for prices, with how each rule is enforced and tested.</li>
+        <li><b>Policy:</b> in <code>AGENT_POLICY.md</code>, add rules for prices, with how each rule is enforced and tested.</li>
         <li><b>Golden dataset:</b> add at least 3 price rows with variants, including one product that is not a LumaBox.</li>
         <li><b>Gate:</b> run <code>pytest</code> and <code>python -m src.gate</code>. Update the baseline only if no existing category got worse, and give the reason in the commit message.</li>
       </ol>
@@ -801,7 +801,7 @@ GATE FAILED: out of scope, refund got worse than the baseline. Don't ship this c
       </ol>
       <div class="hints">
         <details><summary>A. A teammate sets <code>PROMPT_VERSION = "v2"</code> and pushes to main.</summary><div class="body"><p><b>The quality gate</b> in <code>test</code> fails (<code>out of scope</code> and <code>refund</code> got worse). <code>build</code> and <code>deploy</code> never run, so customers keep v1.</p></div></details>
-        <details><summary>B. Someone deletes "24/7" from <code>data/policies.txt</code> by accident.</summary><div class="body"><p><b><code>pytest</code></b> fails: the <code>support_hours</code> cases cannot find <code>"24/7"</code>. Changes to the knowledge go through the same tests as changes to the code.</p></div></details>
+        <details><summary>B. Someone deletes "24/7" from <code>data/lumabox_policies.txt</code> by accident.</summary><div class="body"><p><b><code>pytest</code></b> fails: the <code>support_hours</code> cases cannot find <code>"24/7"</code>. Changes to the knowledge go through the same tests as changes to the code.</p></div></details>
         <details><summary>C. A typo fix in <code>README.md</code>.</summary><div class="body"><p>All checks pass and the change is deployed, possibly after a manual approval.</p></div></details>
         <details><summary>D. v1 is live, and a week later it fails on a new kind of question.</summary><div class="body"><p>Add the new questions to the golden dataset (they fail), fix the prompt as a new version or fix the knowledge, then push it through the pipeline. Rolling back means redeploying an older image by its commit tag. Never patch production by hand.</p></div></details>
       </div>
@@ -952,7 +952,7 @@ python -m src.review --sample 5</pre></figure>
         </li>
         <li><b>Analyze:</b> in <code>homework/monitoring_report.md</code>, classify every flagged and sampled turn, then count how many there are of each type.</li>
         <li><b>Fix</b> at least two failures of different types. Add each failing question to <code>golden.xlsx</code> <em>before</em> you fix it; afterwards <code>pytest</code> and the gate must pass.</li>
-        <li><b>Sentiment:</b> add a <code>POLICY.md</code> rule for frustrated customers, with how you'd enforce and test it.</li>
+        <li><b>Sentiment:</b> add a <code>AGENT_POLICY.md</code> rule for frustrated customers, with how you'd enforce and test it.</li>
       </ol>
       <p>Full details: Exercise 2 in <code>homework/Homework.md</code>.</p>
       <div class="expect"><b class="t">Expected results</b>

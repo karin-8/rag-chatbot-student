@@ -61,11 +61,11 @@ Run button runs the file as a loose script and fails with
 
 ```
 rag-chatbot/
-├── data/policies.txt              # the knowledge: raw policy text
+├── data/lumabox_policies.txt      # the knowledge: raw policy text
 ├── src/ingest.py                  # TODO I1-I4: chunk, embed, persist to Chroma
 ├── src/rag.py                     # TODO R1-R6: retrieval, prompt, policy, agent
 ├── prompts/                       # versioned prompts + CHANGELOG.md
-├── POLICY.md                      # how the bot must behave, and how that's enforced
+├── AGENT_POLICY.md                # how the bot must behave, and how that's enforced
 ├── tests/test_retrieval.py        # TODO T1: one assertion
 ├── tests/golden.xlsx              # TODO T2: your golden dataset
 ├── tests/test_golden.py           # runs every golden question

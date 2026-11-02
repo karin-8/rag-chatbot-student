@@ -25,7 +25,7 @@ GENERATOR_MODEL_NAME = "google/flan-t5-base"
 # quality gate first (Module 3, Task 3) and record the change in prompts/CHANGELOG.md.
 PROMPT_VERSION = "v1"
 
-# What the bot says when its policy says not to answer (POLICY.md, P3-P4).
+# What the bot says when its policy says not to answer (AGENT_POLICY.md, P3-P4).
 REFUSAL_MESSAGE = (
     "I don't have information about that. "
     "For anything else, please contact LumaBox technical support."
@@ -100,7 +100,7 @@ SIMILARITY_THRESHOLD = ...
 
 
 def should_refuse(hits):
-    """POLICY.md P1: refuse when nothing retrieved is relevant enough.
+    """AGENT_POLICY.md P1: refuse when nothing retrieved is relevant enough.
 
     TODO R6: return True when there are no hits, or when the top hit's
     similarity is below SIMILARITY_THRESHOLD.
